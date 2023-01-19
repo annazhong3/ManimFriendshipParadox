@@ -10,21 +10,50 @@
 
 from manim import *
 
+import networkx as nx
+
+
 # for rendering
 %%manim -qm -v WARNING FP
 
-# SCENE 1
+
 class FP(Scene):
     def construct(self):
-        
+
+        #SCENE 1 - title
         text = Text("The Friendship Paradox", slant = ITALIC)
         self.play(AddTextLetterByLetter(text, font_size = 36))
         self.play(Uncreate(text))
+    
+
+        #SCENE 2 - introduction 
+        text = Text("There are 4 friends\n Goofy\nMickey\nOlaf\n& Donald", slant = ITALIC)
+        self.play(Write(text, font_size = 24))
+        self.wait(0.5)
+        self.play(Uncreate(text))
+
+        # SCENE 3 - main network
+        vertices = [1, 2, 3, 4]
+        edges = [(1,2), (3,2), (2,4), (3,4)]
+        g = Graph(vertices, edges, layout="circular", layout_scale=3, labels= True).scale(0.75)
+        self.play(Create(g))
+        self.play(g.animate.shift(LEFT * 3))
+
+        text = Text("Legend: \n 1 - Olaf\n 2 - Mickey\n3 - Donald\n4 - Goofy", slant = ITALIC).scale(0.5).shift(RIGHT * 3)
+        self.play(Write(text, font_size = 24))
+
         
+        self.play(text.animate().to_edge(DOWN + LEFT).shift(UP * 2.75))
+        self.play(g.animate().scale(0.5).to_edge(UP+ LEFT))
 
-        %%manim -qm LargeTreeGeneration
+        #SCENE 4 - seperate trees 
+        g = Graph(vertices, edges, layout="circular", layout_scale=3, labels= True,
+        vertex_config={1: {"fill_color": RED}}, edge_config={(1, 2): {"stroke_color": RED},}).scale(0.75).scale(0.5).to_edge(UP+ LEFT)
 
-# SCENE 2
+        self.add(g)
+        self.wait(2)
+
+
 class LargeTreeGeneration(MovingCameraScene):
     
     DEPTH = 4
@@ -63,7 +92,7 @@ class LargeTreeGeneration(MovingCameraScene):
         )
         self.play(self.camera.auto_zoom(g, margin=1), run_time=4)
 
-# SCENE 3
+
 import math
 
 %%manim -qm -v WARNING Friendship
