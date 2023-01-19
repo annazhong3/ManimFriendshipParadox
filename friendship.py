@@ -11,7 +11,7 @@
 from manim import *
 
 # for rendering
-%%manim -qm -v WARNING Friendship
+%%manim -qm -v WARNING FP
 
 # SCENE 1
 class FP(Scene):
