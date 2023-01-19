@@ -110,9 +110,9 @@ class Friendship(MovingCameraScene):
      axes = Axes(
          x_range=[0, 1000, 200],
          y_range=[0, 1000, 200],
-         x_axis_config={"numbers_to_include": np.arange(0, 1000, 200)},
-         y_axis_config={"numbers_to_include": np.arange(0, 1000, 200)}
-     )
+        #  x_axis_config={"numbers_to_include": np.arange(0, 1000, 200)},
+        #  y_axis_config={"numbers_to_include": np.arange(0, 1000, 200)}
+     ).scale(0.75).add_coordinates()
      labels = axes.get_axis_labels(x_label="\# Friends You Have", y_label="Average \# Friends Your Friends Have")
      
      # graph our function
@@ -120,10 +120,15 @@ class Friendship(MovingCameraScene):
        return 216.27 * math.sqrt(0.014*x + 1.859)
      graph = axes.plot(func, color=MAROON)
 
+
      # create dots
      moving_dot = Dot(axes.i2gp(graph.t_min, graph), color=ORANGE)
      dot_1 = Dot(axes.i2gp(graph.t_min, graph))
      dot_2 = Dot(axes.i2gp(graph.t_max, graph))
+
+     # mark the break even point
+     # point = axes.coords_to_point([800, 800, 0])
+     # break_even_point = Dot(point)
 
      # make stuff appear on screen
      # self.wait(3)
@@ -138,5 +143,13 @@ class Friendship(MovingCameraScene):
      self.camera.frame.remove_updater(update_curve)
 
      self.play(Restore(self.camera.frame))
+
+     # the "break even" dot
+     dot_axes = Dot(axes.coords_to_point(770, 770), color=GREEN)
+     lines = axes.get_lines_to_point(axes.c2p(770,770))
+     label = (
+            Text("[770, 770]").scale(0.4).next_to(dot_axes, RIGHT)
+        )
+     self.add(axes, labels, graph, dot_1, dot_2, moving_dot, dot_axes, lines, label)
 
      self.wait(3)
