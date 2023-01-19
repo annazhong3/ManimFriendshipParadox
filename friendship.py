@@ -13,6 +13,10 @@ from manim import *
 # for rendering
 %%manim -qm -v WARNING Friendship
 
-class Friendship(Scene):
-   def construct(self):
-     pass
+class FP(Scene):
+    def construct(self):
+
+        #SCENE 1
+        text = Text("The Friendship Paradox", slant = ITALIC)
+        self.play(AddTextLetterByLetter(text, font_size = 36))
+        self.play(Uncreate(text))
