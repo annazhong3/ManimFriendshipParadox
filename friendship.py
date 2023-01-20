@@ -92,6 +92,19 @@ class LargeTreeGeneration(MovingCameraScene):
         )
         self.play(self.camera.auto_zoom(g, margin=1), run_time=4)
 
+%%manim -qm -v WARNING Facebook
+
+class Facebook(Scene):
+  def construct(self):
+    text1 = Text("Let's look at a real-world situation.", slant = ITALIC, font_size = 28)
+    text2 = Text("Based on a study conducted on Facebook in 2011...", slant = ITALIC, font_size = 28)
+    source = Text("Source: Ugander, Johan & Karrer, Brian & Backstrom, Lars & Marlow, Cameron. (2011). The Anatomy of the Facebook Social Graph. arXiv preprint. 1111.4503.", font_size=12).to_edge(DOWN)
+    self.play(Write(text1))
+    self.wait(1)
+    self.play(Uncreate(text1))
+    self.play(Write(text2), Write(source))
+    self.wait(2)
+    self.play(Uncreate(text2, source))
 
 import math
 
